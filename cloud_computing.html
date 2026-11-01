@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengenalan Cloud Computing | Praktikum Komputasi Awan</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(22, 30, 49, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Header / Hero */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: #60a5fa;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 40%, #93c5fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Section Styling */
+        section {
+            margin-bottom: 50px;
+        }
+
+        .section-header {
+            margin-bottom: 24px;
+        }
+
+        .section-header h2 {
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        /* Glass Cards */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(12px);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 12px 30px -10px var(--primary-glow);
+        }
+
+        /* Apa itu Cloud */
+        .about-card {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .about-text {
+            font-size: 1.05rem;
+            color: #d1d5db;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .benefit-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .benefit-item h4 {
+            font-size: 0.95rem;
+            color: #60a5fa;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .benefit-item p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Service Models (IaaS, PaaS, SaaS) */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .model-card {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .model-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .model-iaas::before { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
+        .model-paas::before { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+        .model-saas::before { background: linear-gradient(90deg, #f59e0b, #10b981); }
+
+        .model-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .model-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .model-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+
+        .model-desc {
+            font-size: 0.92rem;
+            color: #d1d5db;
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+
+        .model-examples {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.85rem;
+        }
+
+        .model-examples strong {
+            color: #e5e7eb;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .model-examples span {
+            color: var(--text-muted);
+        }
+
+        /* Cloud Providers */
+        .provider-card {
+            display: flex;
+            flex-direction: column;
+            border-top: 3px solid transparent;
+        }
+
+        .provider-aws { border-top-color: #ff9900; }
+        .provider-azure { border-top-color: #0078d4; }
+        .provider-gcp { border-top-color: #4285f4; }
+
+        .provider-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .provider-logo {
+            font-size: 2.2rem;
+        }
+
+        .provider-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .provider-tag {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #d1d5db;
+            margin-left: auto;
+        }
+
+        .provider-card p {
+            font-size: 0.92rem;
+            color: #d1d5db;
+            margin-bottom: 14px;
+        }
+
+        .provider-services {
+            list-style: none;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 10px;
+        }
+
+        .provider-services li {
+            padding: 3px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .provider-services li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Interactive Status Bar */
+        .status-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .status-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: background 0.2s ease, transform 0.1s;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+            transform: scale(1.02);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 30px;
+            margin-top: 60px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .author-box {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.1rem; }
+            .hero-desc { font-size: 1rem; }
+            .container { padding: 30px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="badge">☁️ Modul Praktikum</div>
+            <h1>Pengenalan Cloud Computing</h1>
+            <p class="hero-desc">
+                Memahami konsep dasar komputasi awan, model arsitektur layanan, serta platform penyedia cloud terkemuka di dunia industri modern.
+            </p>
+        </header>
+
+        <!-- Section 1: Apa itu Cloud Computing -->
+        <section id="pengertian">
+            <div class="section-header">
+                <h2>📖 1. Apa Itu Cloud Computing?</h2>
+                <p>Definisi dan karakteristik fundamental komputasi awan</p>
+            </div>
+            <div class="card about-card">
+                <p class="about-text">
+                    <strong>Cloud Computing (Komputasi Awan)</strong> adalah teknologi penyediaan sumber daya komputasi—seperti server fisik/virtual, penyimpanan data (storage), database, jaringan, dan perangkat lunak—secara <em>on-demand</em> (sesuai kebutuhan) melalui koneksi internet.
+                </p>
+                <p class="about-text">
+                    Pengguna tidak perlu lagi membeli dan mengelola server fisik sendiri di gedung atau ruangan khusus (on-premise), melainkan cukup menyewa infrastruktur yang disediakan oleh penyedia cloud dengan skema <strong>Pay-As-You-Go</strong> (bayar sesuai penggunaan).
+                </p>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <h4>⚡ Efisiensi Biaya</h4>
+                        <p>Menghemat modal awal pembelian hardware mahal dan biaya maintenance server.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h4>📈 Skalabilitas Tinggi</h4>
+                        <p>Kapasitas server dapat dinaikkan atau diturunkan dengan cepat saat traffic meningkat.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h4>🌍 Akses Global</h4>
+                        <p>Aplikasi dan data dapat diakses dari mana saja secara real-time melalui internet.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h4>🛡️ Keandalan & Backup</h4>
+                        <p>Data terlindungi dengan pusat data redundan dan sistem disaster recovery otomatis.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Model Layanan Cloud -->
+        <section id="model-layanan">
+            <div class="section-header">
+                <h2>⚙️ 2. Jenis Model Layanan Cloud</h2>
+                <p>Tiga kategori utama layanan komputasi awan berdasarkan tingkat kontrol pengguna</p>
+            </div>
+            <div class="grid-3">
+                <!-- IaaS -->
+                <div class="card model-card model-iaas">
+                    <div class="model-icon">🖥️</div>
+                    <h3 class="model-title">IaaS</h3>
+                    <div class="model-subtitle">Infrastructure as a Service</div>
+                    <p class="model-desc">
+                        Menyediakan infrastruktur dasar komputasi berupa virtual machine, server, storage, dan jaringan. Pengguna memiliki kontrol penuh atas sistem operasi, aplikasi, dan konfigurasi sistem.
+                    </p>
+                    <div class="model-examples">
+                        <strong>Contoh Layanan:</strong>
+                        <span>AWS EC2, Azure Virtual Machines, Google Compute Engine (GCE).</span>
+                    </div>
+                </div>
+
+                <!-- PaaS -->
+                <div class="card model-card model-paas">
+                    <div class="model-icon">📦</div>
+                    <h3 class="model-title">PaaS</h3>
+                    <div class="model-subtitle">Platform as a Service</div>
+                    <p class="model-desc">
+                        Menyediakan lingkungan pengembangan dan deployment aplikasi. Pengguna hanya perlu fokus membuat dan mengunggah kode program tanpa perlu mengurus sistem operasi atau server.
+                    </p>
+                    <div class="model-examples">
+                        <strong>Contoh Layanan:</strong>
+                        <span>AWS Elastic Beanstalk, Azure App Service, Google App Engine, Heroku.</span>
+                    </div>
+                </div>
+
+                <!-- SaaS -->
+                <div class="card model-card model-saas">
+                    <div class="model-icon">🌐</div>
+                    <h3 class="model-title">SaaS</h3>
+                    <div class="model-subtitle">Software as a Service</div>
+                    <p class="model-desc">
+                        Perangkat lunak yang siap digunakan langsung oleh pengguna akhir via web browser atau aplikasi, tanpa instalasi rumit maupun pengelolaan infrastruktur latar belakang.
+                    </p>
+                    <div class="model-examples">
+                        <strong>Contoh Layanan:</strong>
+                        <span>Google Workspace (Gmail, Drive), Microsoft 365, Dropbox, Zoom.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Contoh Penyedia Cloud Terbesar -->
+        <section id="penyedia-cloud">
+            <div class="section-header">
+                <h2>🏢 3. Contoh Penyedia Layanan Cloud (Cloud Providers)</h2>
+                <p>Tiga raksasa teknologi penyedia infrastruktur cloud global (The Big Three)</p>
+            </div>
+            <div class="grid-3">
+                <!-- AWS -->
+                <div class="card provider-card provider-aws">
+                    <div class="provider-header">
+                        <div class="provider-logo">🟧</div>
+                        <div>
+                            <h3>Amazon Web Services</h3>
+                            <span style="font-size: 0.8rem; color: #ff9900; font-weight: 600;">AWS</span>
+                        </div>
+                        <span class="provider-tag">Pangsa Pasar #1</span>
+                    </div>
+                    <p>
+                        Pionir layanan cloud publik komersial sejak 2006 dengan katalog layanan terlengkap dan jaringan data center terluas di dunia.
+                    </p>
+                    <ul class="provider-services">
+                        <li>Komputasi: Amazon EC2</li>
+                        <li>Penyimpanan: Amazon S3</li>
+                        <li>Database: Amazon RDS, DynamoDB</li>
+                    </ul>
+                </div>
+
+                <!-- Azure -->
+                <div class="card provider-card provider-azure">
+                    <div class="provider-header">
+                        <div class="provider-logo">🟦</div>
+                        <div>
+                            <h3>Microsoft Azure</h3>
+                            <span style="font-size: 0.8rem; color: #0078d4; font-weight: 600;">Azure</span>
+                        </div>
+                        <span class="provider-tag">Solusi Enterprise</span>
+                    </div>
+                    <p>
+                        Layanan cloud dari Microsoft dengan integrasi sempurna untuk sistem Windows Server, Active Directory, serta solusi hybrid cloud perusahaan.
+                    </p>
+                    <ul class="provider-services">
+                        <li>Komputasi: Azure Virtual Machines</li>
+                        <li>Penyimpanan: Azure Blob Storage</li>
+                        <li>Deployment: Azure App Service</li>
+                    </ul>
+                </div>
+
+                <!-- GCP -->
+                <div class="card provider-card provider-gcp">
+                    <div class="provider-header">
+                        <div class="provider-logo">🟥</div>
+                        <div>
+                            <h3>Google Cloud Platform</h3>
+                            <span style="font-size: 0.8rem; color: #4285f4; font-weight: 600;">GCP</span>
+                        </div>
+                        <span class="provider-tag">AI & Big Data</span>
+                    </div>
+                    <p>
+                        Layanan cloud dari Google yang sangat unggul dalam pemrosesan data skala besar, container (Kubernetes), serta teknologi kecerdasan buatan (Machine Learning).
+                    </p>
+                    <ul class="provider-services">
+                        <li>Komputasi: Compute Engine, Cloud Run</li>
+                        <li>Penyimpanan: Cloud Storage</li>
+                        <li>Container: Google Kubernetes Engine (GKE)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+</body>
+</html>
